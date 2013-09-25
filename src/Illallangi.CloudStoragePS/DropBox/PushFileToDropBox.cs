@@ -21,7 +21,7 @@ namespace Illallangi.CloudStoragePS.PowerShell
         public string FileName { get; set; }
 
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        [Alias("Name")]
+        [Alias("FullName")]
         public string Source
         { 
             get
