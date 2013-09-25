@@ -1,0 +1,156 @@
+<Project ToolsVersion="4.0" DefaultTargets="All" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Import Project="$(MSBuildProjectDirectory)\tools\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
+  
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)'==''">Release</Configuration>
+    <Version>$(BUILD_NUMBER)</Version>
+    <GitCommitHash>$(BUILD_VCS_NUMBER)</GitCommitHash>
+    <GitCommitHash Condition=" '$(GitCommitHash)' != '' ">$(GitCommitHash.Substring(0, 8))</GitCommitHash>
+    <!-- dev config -->
+    <Version Condition=" '$(Version)' == '' ">0.0.0.1</Version>
+    <SourceDir>$(MSBuildProjectDirectory)\src</SourceDir>
+    <ArtifactsDir>$(MSBuildProjectDirectory)\artifacts</ArtifactsDir>
+    <ArtifactsDir32>$(ArtifactsDir)\x86</ArtifactsDir32>
+    <ArtifactsDir64>$(ArtifactsDir)\x64</ArtifactsDir64>
+    <BuildDir>$(MSBuildProjectDirectory)\build</BuildDir>
+    <BuildDir32>$(BuildDir)\x86</BuildDir32>
+    <BuildDir64>$(BuildDir)\x64</BuildDir64>
+    
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Candle Include="$(MSBuildProjectDirectory)\tools\wix\candle.exe" />
+    <Light Include="$(MSBuildProjectDirectory)\tools\wix\light.exe" />
+  </ItemGroup>
+
+  <Target Name="Version">
+
+    <GitVersion LocalPath="$(SourceDir)\..\" Condition=" '$(GitCommitHash)' == '' ">
+      <Output TaskParameter="CommitHash" PropertyName="GitCommitHash" />
+    </GitVersion>
+
+    <AssemblyInfo CodeLanguage="CS"
+                  OutputFile="$(SourceDir)\Illallangi.CloudStoragePS\Properties\AssemblyInfo.cs"
+                  AssemblyTitle="Illallangi.CloudStoragePS"
+                  AssemblyDescription=""
+                  AssemblyCompany="Illallangi Enterprises"
+                  AssemblyProduct="Cloud Storage PowerShell Module"
+                  AssemblyCopyright="Copyright © Illallangi Enterprises 2013"
+                  ComVisible="false"
+                  AssemblyInformationalVersion="Built from hash '$(GitCommitHash)'"
+                  Guid="e92417b8-61ad-48e5-869d-80a19f6f9d93"
+                  AssemblyVersion="$(Version)"
+                  AssemblyFileVersion="$(Version)" />
+
+    <Message Text="Building version $(Version) from hash $(GitCommitHash)"  Importance="High" />
+
+  </Target>
+
+  <Target Name="Compile">
+    <Message Text="=========== Compile ===========" Importance="High" />
+
+    <MSBuild Projects="$(SourceDir)\Illallangi.CloudStoragePS.sln" Properties="Configuration=$(Configuration)" Targets="Rebuild" />
+  </Target>
+
+  <Target Name="Copy32" DependsOnTargets="Compile">
+    <Message Text="=========== Copy x86 ===========" Importance="High" />
+
+    <MakeDir Directories="$(BuildDir32)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\Illallangi.CloudStoragePS.dll"
+          DestinationFolder="$(BuildDir32)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\Illallangi.CloudStoragePS.dll.config"
+          DestinationFolder="$(BuildDir32)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\Illallangi.CloudStoragePS.psd1"
+          DestinationFolder="$(BuildDir32)\bin" />
+    
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\Illallangi.CloudStoragePS.psm1"
+          DestinationFolder="$(BuildDir32)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\DropNet.dll"
+          DestinationFolder="$(BuildDir32)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\RestSharp.dll"
+          DestinationFolder="$(BuildDir32)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\Newtonsoft.Json.dll"
+          DestinationFolder="$(BuildDir32)\bin" />
+  </Target>
+  
+  <Target Name="Copy64" DependsOnTargets="Compile">
+    <Message Text="=========== Copy x64 ===========" Importance="High" />
+
+    <MakeDir Directories="$(BuildDir64)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\Illallangi.CloudStoragePS.dll"
+          DestinationFolder="$(BuildDir64)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\Illallangi.CloudStoragePS.dll.config"
+          DestinationFolder="$(BuildDir64)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\Illallangi.CloudStoragePS.psd1"
+          DestinationFolder="$(BuildDir64)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\Illallangi.CloudStoragePS.psm1"
+          DestinationFolder="$(BuildDir64)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\DropNet.dll"
+          DestinationFolder="$(BuildDir64)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\RestSharp.dll"
+          DestinationFolder="$(BuildDir64)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\Newtonsoft.Json.dll"
+          DestinationFolder="$(BuildDir64)\bin" />
+  </Target>
+
+  <Target Name="Zip32" DependsOnTargets="Copy32">
+    <Message Text="=========== Zip x86 ===========" Importance="High" />
+
+    <CreateItem Include="$(BuildDir32)\bin\*.*" >
+      <Output ItemName="ZipFiles32" TaskParameter="Include"/>
+    </CreateItem>
+
+    <Zip ZipFileName="$(ArtifactsDir)\Illallangi Enterprises Cloud Storage PowerShell Module x86 v$(Version).zip" WorkingDirectory="$(BuildDir32)\bin" Files="@(ZipFiles32)" />
+  </Target>
+
+  <Target Name="Zip64" DependsOnTargets="Copy64">
+    <Message Text="=========== Zip x64 ===========" Importance="High" />
+
+    <CreateItem Include="$(BuildDir64)\bin\*.*" >
+      <Output ItemName="ZipFiles64" TaskParameter="Include"/>
+    </CreateItem>
+
+    <Zip ZipFileName="$(ArtifactsDir)\Illallangi Enterprises Cloud Storage PowerShell Module x64 v$(Version).zip" WorkingDirectory="$(BuildDir64)\bin" Files="@(ZipFiles64)" />
+  </Target>
+
+  <Target Name="MSI32" DependsOnTargets="Copy32">
+    <Message Text="=========== MSI x86 ===========" Importance="High" />
+
+    <MakeDir Directories="$(BuildDir32)\wix" />
+
+    <Exec Command='"@(Candle)" -nologo -wx -dsource="$(BuildDir32)\bin" -out "$(BuildDir32)\wix\build.wixobj" "$(MSBuildProjectDirectory)\build.wxs"' />
+
+    <Exec Command='"@(Light)" -nologo -wx -ext WixUIExtension -out "$(ArtifactsDir)\Illallangi Enterprises Cloud Storage PowerShell Module x86 v$(Version).msi" -pdbout "$(BuildDir32)\wix\build.wixpdb" "$(BuildDir32)\wix\build.wixobj"' />
+  </Target>
+
+  <Target Name="MSI64" DependsOnTargets="Copy64">
+    <Message Text="=========== MSI x64 ===========" Importance="High" />
+
+    <MakeDir Directories="$(BuildDir64)\wix" />
+
+    <Exec Command='"@(Candle)" -nologo -wx -arch x64 -dsource="$(BuildDir64)\bin" -out "$(BuildDir64)\wix\build.wixobj" "$(MSBuildProjectDirectory)\build.wxs"' />
+
+    <Exec Command='"@(Light)" -nologo -wx -ext WixUIExtension -out "$(ArtifactsDir)\Illallangi Enterprises Cloud Storage PowerShell Module x64 v$(Version).msi" -pdbout "$(BuildDir64)\wix\build.wixpdb" "$(BuildDir64)\wix\build.wixobj"' />
+  </Target>
+  
+  <Target Name="All" DependsOnTargets="Zip32;Zip64;MSI32;MSI64">
+
+    <Message Text="=========== All Done ===========" Importance="High" />
+
+  </Target>
+
+</Project>

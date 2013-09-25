@@ -1,0 +1,119 @@
+<?define Manufacturer="Illallangi Enterprises" ?>
+<?define AppName="Cloud Storage PowerShell Module" ?>
+<?define Version="0.0.0.1" ?>
+
+<?if $(sys.BUILDARCH)=x64 ?>
+<?define Win64="yes" ?>
+<?define PlatformProgramFilesFolder="ProgramFiles64Folder" ?>
+<?define PlatformSystemFolder="System64Folder" ?>
+<?define ProductId="{3E6E80AF-FA99-44E6-BCB7-C48C66B825E2}" ?>
+<?define UpgradeCode="{9AD3151E-8B60-45FD-BDEA-EB0BFB317F04}" ?>
+<?else ?>
+<?define Win64="no" ?>
+<?define PlatformProgramFilesFolder="ProgramFilesFolder" ?>
+<?define PlatformSystemFolder="SystemFolder" ?>
+<?define ProductId="{901B7B1C-19DA-4615-9899-24A78E26E538}" ?>
+<?define UpgradeCode="{770BAC66-CC44-4EBC-9EBD-20A673F58E0F}" ?>
+<?endif ?>
+
+<Wix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Name="$(var.AppName) $(sys.BUILDARCH) v$(var.Version)"
+           Manufacturer="$(var.Manufacturer)"
+           Version="$(var.Version)"
+           Id="$(var.ProductId)"
+           UpgradeCode="$(var.UpgradeCode)"
+           Language="1033"
+           Codepage="1252" >
+
+    <Package InstallerVersion="200" Compressed="yes" Id="*" />
+    <Media Id="1" Cabinet="package.cab" EmbedCab="yes" />
+
+    <Upgrade Id="$(var.UpgradeCode)">
+      <UpgradeVersion Minimum="$(var.Version)"
+                      IncludeMinimum="no"
+                      OnlyDetect="yes"
+                      Language="1033"
+                      Property="NEWPRODUCTFOUND"/>
+
+      <UpgradeVersion Maximum="$(var.Version)"
+                      IncludeMaximum="no"
+                      OnlyDetect="no"
+                      Language="1033"
+                      Property="OLDPRODUCTFOUND"/>
+    </Upgrade>
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Component Id="Empty" Guid="" />
+      <Directory Id="$(var.PlatformSystemFolder)">
+        <Directory Id="WindowsPowerShell" Name="WindowsPowerShell">
+          <Directory Id="v1.0" Name="v1.0">
+            <Directory Id="Modules" Name="Modules">
+              <Directory Id="SOFTWAREDIR" Name="Illallangi.CloudStoragePS" />
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <!--
+    <Icon Id="favicon.ico" SourceFile="$(var.source)\favicon.ico" />
+    -->
+    <Property Id="ALLUSERS" Value="1" />
+    <Property Id="ARPPRODUCTICON" Value="favicon.ico" />
+    <Property Id="ARPNOMODIFY" Value="1" />
+
+    <Feature Id="Complete" Level="1" Title="$(var.AppName)">
+      <Component Id="IllallangiCloudStoragePSDllC" Directory="SOFTWAREDIR" Guid="{115B1C9B-63CF-4583-8E6D-0D5F456E341B}" Permanent="yes" >
+        <File Id="IllallangiCloudStoragePSDllC" KeyPath="yes" Source="$(var.source)\Illallangi.CloudStoragePS.dll" />
+        <File Id="IllallangiCloudStoragePSDllCConfig" Source="$(var.source)\Illallangi.CloudStoragePS.dll.Config" />
+        <File Id="IllallangiCloudStoragePSDllCPSD1" Source="$(var.source)\Illallangi.CloudStoragePS.psd1" />
+        <File Id="IllallangiCloudStoragePSDllCPSM1" Source="$(var.source)\Illallangi.CloudStoragePS.psm1" />
+      </Component>
+      <Component Id="NewtonsoftJsonDllC" Directory="SOFTWAREDIR" Guid="{83A22C6C-41CE-4687-ACBD-D851C9CE380C}" Permanent="yes" >
+        <File Id="NewtonsoftJsonDllF" KeyPath="yes" Source="$(var.source)\Newtonsoft.Json.dll" />
+      </Component>
+      <Component Id="RestSharpDllC" Directory="SOFTWAREDIR" Guid="{1462CBF4-AAA5-4410-8C97-E51EA51297DF}" Permanent="yes" >
+        <File Id="RestSharpDllF" KeyPath="yes" Source="$(var.source)\RestSharp.dll" />
+      </Component>
+      <Component Id="DropNetDllC" Directory="SOFTWAREDIR" Guid="{6D26505F-24F1-42BC-8334-27CBBD53891A}" Permanent="yes" >
+        <File Id="DropNetDllF" KeyPath="yes" Source="$(var.source)\DropNet.dll" />
+      </Component>
+      <ComponentRef Id="Empty" />
+    </Feature>
+
+
+    <UI Id="Minimal">
+      <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
+      <TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />
+      <TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />
+      <Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
+      <Property Id="WixUI_Mode" Value="Minimal" />
+      <DialogRef Id="ErrorDlg" />
+      <DialogRef Id="FatalError" />
+      <DialogRef Id="FilesInUse" />
+      <DialogRef Id="MsiRMFilesInUse" />
+      <DialogRef Id="PrepareDlg" />
+      <DialogRef Id="ProgressDlg" />
+      <DialogRef Id="ResumeDlg" />
+      <DialogRef Id="UserExit" />
+      <DialogRef Id="WelcomeDlg" />
+      <DialogRef Id="VerifyReadyDlg" />
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg">1</Publish>
+      <Publish Dialog='ExitDialog' Control='Finish' Event='EndDialog' Value='Return'>1</Publish>
+    </UI>
+
+    <UIRef Id="WixUI_Common" />
+
+    <CustomAction Id="PreventDowngrading" Error="Newer version already installed." />
+
+    <InstallExecuteSequence>
+      <RemoveExistingProducts After="InstallInitialize" />
+      <Custom Action="PreventDowngrading" After="FindRelatedProducts">NEWPRODUCTFOUND</Custom>
+    </InstallExecuteSequence>
+
+    <InstallUISequence>
+      <Custom Action="PreventDowngrading" After="FindRelatedProducts">NEWPRODUCTFOUND</Custom>
+    </InstallUISequence>
+  </Product>
+</Wix>
