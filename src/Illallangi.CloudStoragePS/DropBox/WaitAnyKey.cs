@@ -23,7 +23,7 @@ namespace Illallangi.CloudStoragePS.PowerShell
             }
         }
 
-        [Parameter(DontShow = true, ValueFromPipeline = true)]
+        [Parameter(ValueFromPipeline = true)]
         public object Input { get; set; }
 
         protected override void ProcessRecord()
