@@ -16,7 +16,6 @@
     <BuildDir>$(MSBuildProjectDirectory)\build</BuildDir>
     <BuildDir32>$(BuildDir)\x86</BuildDir32>
     <BuildDir64>$(BuildDir)\x64</BuildDir64>
-    
   </PropertyGroup>
 
   <ItemGroup>
@@ -38,7 +37,7 @@
 
     <AssemblyInfo CodeLanguage="CS"
                   OutputFile="$(SourceDir)\Illallangi.CloudStoragePS\Properties\AssemblyInfo.cs"
-                  AssemblyTitle="Illallangi.CloudStoragePS"
+                  AssemblyTitle="Cloud Storage PowerShell Module"
                   AssemblyDescription=""
                   AssemblyCompany="Illallangi Enterprises"
                   AssemblyProduct="Cloud Storage PowerShell Module"
@@ -47,9 +46,8 @@
                   AssemblyInformationalVersion="Built from hash '$(GitCommitHash)'"
                   Guid="e92417b8-61ad-48e5-869d-80a19f6f9d93"
                   AssemblyVersion="$(Version)"
-                  AssemblyFileVersion="$(Version)"
+                  AssemblyFileVersion="$(Version)" 
                   Condition="$(Version) != '0.0.0.1'" />
-
   </Target>
 
   <Target Name="Compile" DependsOnTargets="Version">
@@ -134,11 +132,8 @@
 
   <Target Name="MSI32" DependsOnTargets="Copy32">
     <Message Text="=========== MSI x86 ===========" Importance="High" />
-
     <MakeDir Directories="$(BuildDir32)\wix" />
-
     <Exec Command='"@(Candle)" -nologo -wx -dsource="$(BuildDir32)\bin" -out "$(BuildDir32)\wix\build.wixobj" "$(MSBuildProjectDirectory)\build.wxs"' />
-
     <Exec Command='"@(Light)" -nologo -wx -ext WixUIExtension -out "$(ArtifactsDir)\Illallangi Enterprises Cloud Storage PowerShell Module x86 v$(Version).msi" -pdbout "$(BuildDir32)\wix\build.wixpdb" "$(BuildDir32)\wix\build.wixobj"' />
   </Target>
 
@@ -155,7 +150,6 @@
   <Target Name="All" DependsOnTargets="Zip32;Zip64;MSI32;MSI64">
 
     <Message Text="=========== All Done ===========" Importance="High" />
-
   </Target>
 
 </Project>
