@@ -6,9 +6,9 @@ using Newtonsoft.Json;
 
 namespace Illallangi.CloudStoragePS.Config
 {
-    public sealed class TokenCache : List<Token>
+    public sealed class DropBoxTokenCache : List<DropBoxToken>
     {
-        public IEnumerable<Token> AddToken(string eMail, string accessToken, string accessSecret)
+        public IEnumerable<DropBoxToken> AddToken(string eMail, string accessToken, string accessSecret)
         {
             if (1 == this.Count(token => token.EMail.Equals(eMail)))
             {
@@ -17,13 +17,13 @@ namespace Illallangi.CloudStoragePS.Config
             }
             else
             {
-                this.Add(new Token { EMail = eMail, AccessToken = accessToken, AccessSecret = accessSecret });
+                this.Add(new DropBoxToken { EMail = eMail, AccessToken = accessToken, AccessSecret = accessSecret });
             }
             
             yield return this.ToFile().Single(token => token.EMail.Equals(eMail));
         }
 
-        public TokenCache ToFile()
+        public DropBoxTokenCache ToFile()
         {
             var fileName = Environment.ExpandEnvironmentVariables(DropBoxConfig.Config.TokenCache);
             
@@ -37,13 +37,13 @@ namespace Illallangi.CloudStoragePS.Config
             return this;
         }
 
-        public static TokenCache FromFile()
+        public static DropBoxTokenCache FromFile()
         {
             var fileName = Environment.ExpandEnvironmentVariables(DropBoxConfig.Config.TokenCache);
 
             return File.Exists(fileName) ?
-                JsonConvert.DeserializeObject<TokenCache>(File.ReadAllText(fileName)) :
-                new TokenCache().ToFile();
+                JsonConvert.DeserializeObject<DropBoxTokenCache>(File.ReadAllText(fileName)) :
+                new DropBoxTokenCache().ToFile();
         }
     }
 }

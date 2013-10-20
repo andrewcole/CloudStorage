@@ -6,26 +6,23 @@ using DropNet;
 using DropNet.Exceptions;
 using Illallangi.CloudStoragePS.Config;
 
-namespace Illallangi.CloudStoragePS.PowerShell
+namespace Illallangi.CloudStoragePS.Flickr
 {
-    [Cmdlet(VerbsCommon.Set, "DropBoxAccessToken")]
-    public sealed class SetDropBoxAccessToken : PSCmdlet
+    [Cmdlet(VerbsCommon.Set, "FlickrAccessToken")]
+    public sealed class SetFlickrAccessToken : PSCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public string AccessToken { get; set; }
 
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        public string AccessSecret { get; set; }
-
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
-        public string EMail { get; set; }
+        public string UserName { get; set; }
 
         protected override void ProcessRecord()
         {
             this.WriteObject(
-                    DropBoxTokenCache
+                    FlickrTokenCache
                         .FromFile()
-                        .AddToken(this.EMail, this.AccessToken, this.AccessSecret));
+                        .AddToken(this.UserName, this.AccessToken));
         }
     }
 }

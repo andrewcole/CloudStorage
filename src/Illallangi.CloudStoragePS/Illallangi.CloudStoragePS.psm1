@@ -10,6 +10,18 @@
 	}
 }
 
+Function Get-FlickrToken
+{
+	Begin
+	{
+		Get-FlickrFrob | 
+			Open-FlickrAuthorizeUrl | 
+			Wait-AnyKey -Prompt "Complete the authorization process on the Flickr website and press any key to continue..." | 
+			Get-FlickrAccessToken |
+			Set-FlickrAccessToken
+	}
+}
+
 Function Push-ChildItem
 {
 	param(

@@ -1,6 +1,6 @@
 ﻿namespace Illallangi.CloudStoragePS.Config
 {
-    public sealed class Token
+    public sealed class DropBoxToken
     {
         public string EMail { get; set; }
         public string AccessToken { get; set; }

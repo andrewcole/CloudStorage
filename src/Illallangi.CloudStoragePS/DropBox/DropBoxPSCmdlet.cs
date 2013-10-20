@@ -27,7 +27,7 @@ namespace Illallangi.CloudStoragePS.PowerShell
             {
                 try
                 {
-                    var token = TokenCache.FromFile().Single(t => t.EMail.Equals(this.EMail));
+                    var token = DropBoxTokenCache.FromFile().Single(t => t.EMail.Equals(this.EMail));
                     this.AccessToken = token.AccessToken;
                     this.AccessSecret = token.AccessSecret;
                 }

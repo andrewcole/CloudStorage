@@ -2,26 +2,23 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Management.Automation;
-using DropNet;
-using DropNet.Exceptions;
+using FlickrNet;
+using FlickrNet.Exceptions;
 using Illallangi.CloudStoragePS.Config;
 
 namespace Illallangi.CloudStoragePS.PowerShell
 {
-    [Cmdlet(VerbsCommon.Get, "DropBoxAccessToken", DefaultParameterSetName = "Cache")]
-    public sealed class GetDropBoxAccessToken : PSCmdlet
+    [Cmdlet(VerbsCommon.Get, "FlickrAccessToken", DefaultParameterSetName = "Cache")]
+    public sealed class GetFlickrAccessToken : PSCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName="API")]
-        public string UserToken { get; set; }
-
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = "API")]
-        public string UserSecret { get; set; }
+        public string Frob { get; set; }
 
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = "API")]
         public string AuthorizeUrl { get; set; }
 
         [Parameter(ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ParameterSetName = "Cache")]
-        public string Account { get; set; }
+        public string UserName { get; set; }
 
         protected override void ProcessRecord()
         {
@@ -30,29 +27,25 @@ namespace Illallangi.CloudStoragePS.PowerShell
                 case "API":
                     try
                     {
-                        var client = new DropNetClient(
-                            DropBoxConfig.Config.ApiKey,
-                            DropBoxConfig.Config.AppSecret,
-                            this.UserToken,
-                            this.UserSecret);
+                        var client = new FlickrNet.Flickr(
+                            FlickrConfig.Config.ApiKey,
+                            FlickrConfig.Config.SharedSecret);
 
-                        var accessToken = client.GetAccessToken();
-                        var accountInfo = client.AccountInfo();
-
+                        var authToken = client.AuthGetToken(this.Frob);
+                        
                         this.WriteObject(new
                         {
-                            AccessToken = accessToken.Token,
-                            AccessSecret = accessToken.Secret,
-                            EMail = accountInfo.email,
+                            AccessToken = authToken.Token,
+                            UserName = authToken.User.UserName,
                         });
                     }
-                    catch (DropboxException failure)
+                    catch (FlickrException failure)
                     {
                         this.WriteError(new ErrorRecord(
                             failure,
-                            failure.Response.Content,
+                            failure.Message,
                             ErrorCategory.InvalidResult,
-                            DropBoxConfig.Config));
+                            FlickrConfig.Config));
                     }
                     catch (Exception failure)
                     {
@@ -60,20 +53,19 @@ namespace Illallangi.CloudStoragePS.PowerShell
                             failure,
                             failure.Message,
                             ErrorCategory.InvalidResult,
-                            DropBoxConfig.Config));
+                            FlickrConfig.Config));
                     }
                     break;
                 case "Cache":
                     this.WriteObject(
-                            DropBoxTokenCache
+                            FlickrTokenCache
                                 .FromFile()
-                                .Where(token => string.IsNullOrWhiteSpace(this.Account) || token.EMail.Equals(this.Account)));
+                                .Where(token => string.IsNullOrWhiteSpace(this.UserName) || token.UserName.Equals(this.UserName)));
                     break;
                 default:
                     throw new NotImplementedException();
                     break;
             }
-            
         }
     }
 }

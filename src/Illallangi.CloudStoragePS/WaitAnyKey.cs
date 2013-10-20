@@ -2,7 +2,7 @@
 using System.Management.Automation;
 using Illallangi.CloudStoragePS.Config;
 
-namespace Illallangi.CloudStoragePS.PowerShell
+namespace Illallangi.CloudStoragePS
 {
     [Cmdlet(VerbsLifecycle.Wait, "AnyKey")]
     public sealed class WaitAnyKey : PSCmdlet
