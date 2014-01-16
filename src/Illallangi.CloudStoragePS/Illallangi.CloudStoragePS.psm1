@@ -1,4 +1,22 @@
-﻿Function Get-DropBoxToken
+﻿if ($null -eq (Get-Module PSCompletion))
+{
+	Write-Debug "Import-Module PSCompletion -Global"
+	Import-Module PSCompletion -Global -ErrorAction SilentlyContinue
+	if ($null -eq (Get-Module PSCompletion))
+	{
+		Write-Warning "PSCompletion module not found; tab completion will be unavailable."
+	}
+}
+
+if ($null -ne (Get-Module PSCompletion))
+{
+	Register-ParameterCompleter Get-FlickrPeopleInfo UserName {
+		param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameter)
+		Get-FlickrAccessToken | Where-Object { $_.UserName -like "$wordToComplete*" } | Sort-Object { $_.UserName } |%{ New-CompletionResult "$($_.UserName)" }
+	}
+}
+
+Function Get-DropBoxToken
 {
 	Begin
 	{
