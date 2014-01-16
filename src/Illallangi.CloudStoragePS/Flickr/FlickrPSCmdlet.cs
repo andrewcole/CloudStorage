@@ -1,76 +1,71 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Diagnostics;
-//using System.Linq;
-//using System.Management.Automation;
-//using FlickrNet;
-//using FlickrNet.Exceptions;
-//using Illallangi.CloudStoragePS.Config;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Management.Automation;
 
-//namespace Illallangi.CloudStoragePS.Flickr
-//{
-//    [Cmdlet("Get", "FlickrAbstractClass", DefaultParameterSetName="EMail")]
-//    public abstract class FlickrPSCmdlet : PSCmdlet
-//    {
-//        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName="EMail")]
-//        public string EMail { get; set; }
+using FlickrNet;
 
-//        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = "Value")]
-//        public string AccessToken { get; set; }
+using Illallangi.CloudStoragePS.Config;
 
-//        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = "Value")]
-//        public string AccessSecret { get; set; }
+namespace Illallangi.CloudStoragePS.Flickr
+{
+    [Cmdlet("Get", "FlickrAbstractClass", DefaultParameterSetName = FlickrPSCmdlet.EMail)]
+    public abstract class FlickrPSCmdlet : PSCmdlet
+    {
+        private const string EMail = "EMail";
 
-//        protected override void ProcessRecord()
-//        {
-//            if (this.ParameterSetName.Equals("EMail"))
-//            {
-//                try
-//                {
-//                    var token = TokenCache.FromFile().Single(t => t.EMail.Equals(this.EMail));
-//                    this.AccessToken = token.AccessToken;
-//                    this.AccessSecret = token.AccessSecret;
-//                }
-//                catch (Exception failure)
-//                {
-//                    this.WriteError(new ErrorRecord(
-//                        failure,
-//                        failure.Message,
-//                        ErrorCategory.InvalidResult,
-//                        FlickrConfig.Config));
-//                    return;
-//                }
-//            }
-//            try
-//            {
-//                var client = new DropNetClient(
-//                    FlickrConfig.Config.ApiKey,
-//                    FlickrConfig.Config.AppSecret,
-//                    this.AccessToken,
-//                    this.AccessSecret);
+        private const string Value = "Value";
 
-//                this.WriteObject(this.Process(client), true);
-//            }
-//            catch (FlickrException failure)
-//            {
-//                this.WriteError(new ErrorRecord(
-//                    failure,
-//                    failure.Response.Content,
-//                    ErrorCategory.InvalidResult,
-//                    FlickrConfig.Config));
-//                return;
-//            }
-//            catch (Exception failure)
-//            {
-//                this.WriteError(new ErrorRecord(
-//                    failure,
-//                    failure.Message,
-//                    ErrorCategory.InvalidResult,
-//                    FlickrConfig.Config));
-//                return;
-//            }
-//        }
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = FlickrPSCmdlet.EMail)]
+        public string UserName { get; set; }
 
-//        protected abstract IEnumerable<Object> Process(DropNetClient client);
-//    }
-//}
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = FlickrPSCmdlet.Value)]
+        public string AccessToken { get; set; }
+
+        protected override void ProcessRecord()
+        {
+            if (this.ParameterSetName.Equals(FlickrPSCmdlet.EMail))
+            {
+                try
+                {
+                    var token = FlickrTokenCache.FromFile().Single(t => t.UserName.Equals(this.UserName));
+                    this.AccessToken = token.AccessToken;
+                }
+                catch (Exception failure)
+                {
+                    this.WriteError(new ErrorRecord(
+                        failure,
+                        failure.Message,
+                        ErrorCategory.InvalidResult,
+                        FlickrConfig.Config));
+                    return;
+                }
+            }
+            try
+            {
+                var client = new FlickrNet.Flickr(FlickrConfig.Config.ApiKey, FlickrConfig.Config.SharedSecret, this.AccessToken);
+                this.WriteObject(this.Process(client), true);
+            }
+            catch (FlickrException failure)
+            {
+                this.WriteError(new ErrorRecord(
+                    failure,
+                    failure.Message,
+                    ErrorCategory.InvalidResult,
+                    FlickrConfig.Config));
+                return;
+            }
+            catch (Exception failure)
+            {
+                this.WriteError(new ErrorRecord(
+                    failure,
+                    failure.Message,
+                    ErrorCategory.InvalidResult,
+                    FlickrConfig.Config));
+                return;
+            }
+        }
+
+        protected abstract IEnumerable<object> Process(FlickrNet.Flickr client);
+    }
+}
