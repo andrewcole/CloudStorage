@@ -1,30 +1,34 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Management.Automation;
+
 using FlickrNet;
-using FlickrNet.Exceptions;
+
 using Illallangi.CloudStoragePS.Config;
 
 namespace Illallangi.CloudStoragePS.PowerShell
 {
-    [Cmdlet(VerbsCommon.Get, "FlickrAccessToken", DefaultParameterSetName = "Cache")]
+    [Cmdlet(VerbsCommon.Get, "FlickrAccessToken", DefaultParameterSetName = GetFlickrAccessToken.Cache)]
     public sealed class GetFlickrAccessToken : PSCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = "API")]
+        private const string Cache = "Cache";
+
+        private const string API = "API";
+
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = GetFlickrAccessToken.API)]
         public string Frob { get; set; }
 
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = "API")]
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = GetFlickrAccessToken.API)]
         public string AuthorizeUrl { get; set; }
 
-        [Parameter(ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ParameterSetName = "Cache")]
+        [Parameter(ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ParameterSetName = GetFlickrAccessToken.Cache)]
         public string UserName { get; set; }
 
         protected override void ProcessRecord()
         {
             switch (this.ParameterSetName)
             {
-                case "API":
+                case GetFlickrAccessToken.API:
                     try
                     {
                         var client = new FlickrNet.Flickr(
@@ -56,7 +60,7 @@ namespace Illallangi.CloudStoragePS.PowerShell
                             FlickrConfig.Config));
                     }
                     break;
-                case "Cache":
+                case GetFlickrAccessToken.Cache:
                     this.WriteObject(
                             FlickrTokenCache
                                 .FromFile()
@@ -64,7 +68,6 @@ namespace Illallangi.CloudStoragePS.PowerShell
                     break;
                 default:
                     throw new NotImplementedException();
-                    break;
             }
         }
     }

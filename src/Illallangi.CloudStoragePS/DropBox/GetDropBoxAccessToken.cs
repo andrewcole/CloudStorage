@@ -8,26 +8,30 @@ using Illallangi.CloudStoragePS.Config;
 
 namespace Illallangi.CloudStoragePS.PowerShell
 {
-    [Cmdlet(VerbsCommon.Get, "DropBoxAccessToken", DefaultParameterSetName = "Cache")]
+    [Cmdlet(VerbsCommon.Get, "DropBoxAccessToken", DefaultParameterSetName = GetDropBoxAccessToken.CACHE)]
     public sealed class GetDropBoxAccessToken : PSCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName="API")]
+        private const string CACHE = "Cache";
+
+        private const string API = "Api";
+
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = GetDropBoxAccessToken.API)]
         public string UserToken { get; set; }
 
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = "API")]
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = GetDropBoxAccessToken.API)]
         public string UserSecret { get; set; }
 
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = "API")]
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = GetDropBoxAccessToken.API)]
         public string AuthorizeUrl { get; set; }
 
-        [Parameter(ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ParameterSetName = "Cache")]
+        [Parameter(ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ParameterSetName = GetDropBoxAccessToken.CACHE)]
         public string Account { get; set; }
 
         protected override void ProcessRecord()
         {
             switch (this.ParameterSetName)
             {
-                case "API":
+                case GetDropBoxAccessToken.API:
                     try
                     {
                         var client = new DropNetClient(
@@ -63,7 +67,7 @@ namespace Illallangi.CloudStoragePS.PowerShell
                             DropBoxConfig.Config));
                     }
                     break;
-                case "Cache":
+                case GetDropBoxAccessToken.CACHE:
                     this.WriteObject(
                             DropBoxTokenCache
                                 .FromFile()
@@ -71,9 +75,7 @@ namespace Illallangi.CloudStoragePS.PowerShell
                     break;
                 default:
                     throw new NotImplementedException();
-                    break;
             }
-            
         }
     }
 }
