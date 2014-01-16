@@ -71,6 +71,7 @@
     <Compile Include="DropBox\PushFileToDropBox.cs" />
     <Compile Include="Flickr\GetFlickrPeopleInfo.cs" />
     <Compile Include="Flickr\GetFlickrAccessToken.cs" />
+    <Compile Include="Flickr\GetFlickrPhotoset.cs" />
     <Compile Include="Flickr\SetFlickrAccessToken.cs" />
     <Compile Include="WaitAnyKey.cs" />
     <Compile Include="DropBox\GetDropBoxAccessToken.cs" />
