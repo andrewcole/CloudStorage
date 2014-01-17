@@ -64,6 +64,7 @@
     <Compile Include="Config\FlickrConfig.cs" />
     <Compile Include="Config\DropBoxToken.cs" />
     <Compile Include="Config\DropBoxTokenCache.cs" />
+    <Compile Include="Flickr\BackupFlickrPhoto.cs" />
     <Compile Include="Flickr\FlickrPSCmdlet.cs" />
     <Compile Include="DropBox\DropBoxPSCmdlet.cs" />
     <Compile Include="DropBox\SetDropBoxAccessToken.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Flickr\GetFlickrAccessToken.cs" />
     <Compile Include="Flickr\GetFlickrPhoto.cs" />
     <Compile Include="Flickr\GetFlickrPhotoset.cs" />
+    <Compile Include="Flickr\PhotoType.cs" />
     <Compile Include="Flickr\SetFlickrAccessToken.cs" />
     <Compile Include="WaitAnyKey.cs" />
     <Compile Include="DropBox\GetDropBoxAccessToken.cs" />
