@@ -10,6 +10,8 @@ namespace Illallangi.CloudStoragePS
         private string currentPrompt = @"Press any key to continue...";
 
         [Parameter]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public string Prompt
         {
             get
@@ -24,6 +26,8 @@ namespace Illallangi.CloudStoragePS
         }
 
         [Parameter(ValueFromPipeline = true)]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public object Input { get; set; }
 
         protected override void ProcessRecord()
