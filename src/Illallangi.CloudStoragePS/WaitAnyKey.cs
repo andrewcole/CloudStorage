@@ -7,15 +7,14 @@ namespace Illallangi.CloudStoragePS
     [Cmdlet(VerbsLifecycle.Wait, "AnyKey")]
     public sealed class WaitAnyKey : PSCmdlet
     {
-        private string currentPrompt;
+        private string currentPrompt = @"Press any key to continue...";
 
         [Parameter]
         public string Prompt
         {
             get
             {
-                return this.currentPrompt ??
-                    (this.currentPrompt = DropBoxConfig.Config.WaitPrompt);
+                return this.currentPrompt;
             }
 
             set

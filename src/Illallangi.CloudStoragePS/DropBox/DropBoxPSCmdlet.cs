@@ -9,7 +9,7 @@ using Illallangi.CloudStoragePS.Config;
 namespace Illallangi.CloudStoragePS.DropBox
 {
     [Cmdlet("Get", "DropBoxAbstractClass", DefaultParameterSetName = "EMail")]
-    public abstract class DropBoxPsCmdlet : PSCmdlet
+    public abstract class DropBoxPsCmdlet : NinjectCmdlet<DropBoxModule>
     {
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = "EMail")]
         public string EMail { get; set; }
@@ -26,7 +26,7 @@ namespace Illallangi.CloudStoragePS.DropBox
             {
                 try
                 {
-                    var token = DropBoxTokenCache.FromFile().Single(t => t.EMail.Equals(this.EMail));
+                    var token = this.Get<ICollection<DropBoxToken>>().Single(t => t.EMail.Equals(this.EMail));
                     this.AccessToken = token.AccessToken;
                     this.AccessSecret = token.AccessSecret;
                 }
@@ -36,7 +36,7 @@ namespace Illallangi.CloudStoragePS.DropBox
                         failure,
                         failure.Message,
                         ErrorCategory.InvalidResult,
-                        DropBoxConfig.Config));
+                        this.Get<IDropBoxConfig>()));
                     return;
                 }
             }
@@ -44,8 +44,8 @@ namespace Illallangi.CloudStoragePS.DropBox
             try
             {
                 var client = new DropNetClient(
-                    DropBoxConfig.Config.ApiKey,
-                    DropBoxConfig.Config.AppSecret,
+                    this.Get<IDropBoxConfig>().ApiKey,
+                    this.Get<IDropBoxConfig>().AppSecret,
                     this.AccessToken,
                     this.AccessSecret);
 
@@ -57,7 +57,7 @@ namespace Illallangi.CloudStoragePS.DropBox
                     failure,
                     failure.Response.Content,
                     ErrorCategory.InvalidResult,
-                    DropBoxConfig.Config));
+                    this.Get<IDropBoxConfig>()));
             }
             catch (Exception failure)
             {
@@ -65,7 +65,7 @@ namespace Illallangi.CloudStoragePS.DropBox
                     failure,
                     failure.Message,
                     ErrorCategory.InvalidResult,
-                    DropBoxConfig.Config));
+                    this.Get<IDropBoxConfig>()));
             }
         }
 

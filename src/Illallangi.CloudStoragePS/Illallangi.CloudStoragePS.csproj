@@ -38,8 +38,20 @@
     <Reference Include="FlickrNet">
       <HintPath>..\packages\FlickrNet.3.8.0\lib\net20\FlickrNet.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.1.2.11\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Extensions.Logging">
+      <HintPath>..\packages\Ninject.Extensions.Logging.3.0.1.0\lib\net45-full\Ninject.Extensions.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Extensions.Logging.Log4Net">
+      <HintPath>..\packages\Ninject.Extensions.Logging.Log4net.3.0.1.0\lib\net45-full\Ninject.Extensions.Logging.Log4Net.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
@@ -63,7 +75,8 @@
     <Compile Include="Config\FlickrTokenCache.cs" />
     <Compile Include="Config\FlickrConfig.cs" />
     <Compile Include="Config\DropBoxToken.cs" />
-    <Compile Include="Config\DropBoxTokenCache.cs" />
+    <Compile Include="DropBox\DropBoxModule.cs" />
+    <Compile Include="DropBox\NinjectCmdlet.cs" />
     <Compile Include="Flickr\BackupFlickrPhoto.cs" />
     <Compile Include="Flickr\FlickrPSCmdlet.cs" />
     <Compile Include="DropBox\DropBoxPSCmdlet.cs" />

@@ -2,21 +2,17 @@
 
 namespace Illallangi.CloudStoragePS.Config
 {
-    public sealed class DropBoxConfig : ConfigurationSection
+    public interface IDropBoxConfig
     {
-        private static string staticPath;
-        private static Configuration staticExeConfig;
-        private static DropBoxConfig staticConfig;
+        string ApiKey { get; }
 
-        public static DropBoxConfig Config
-        {
-            get
-            {
-                return DropBoxConfig.staticConfig ??
-                    (DropBoxConfig.staticConfig = (DropBoxConfig)DropBoxConfig.ExeConfig.GetSection("DropBoxConfig"));
-            }
-        }
+        string AppSecret { get; }
 
+        string TokenCache { get; }
+    }
+
+    public sealed class DropBoxConfig : ConfigurationSection, IDropBoxConfig
+    {
         [ConfigurationProperty("ApiKey", IsRequired = true)]
         public string ApiKey
         {
@@ -36,31 +32,6 @@ namespace Illallangi.CloudStoragePS.Config
         {
             get { return (string)this["TokenCache"]; }
             set { this["TokenCache"] = value; }
-        }
-
-        [ConfigurationProperty("WaitPrompt", DefaultValue = "Press any key to continue...")]
-        public string WaitPrompt
-        {
-            get { return (string)this["WaitPrompt"]; }
-            set { this["WaitPrompt"] = value; }
-        }
-        
-        private static string Path
-        {
-            get
-            {
-                return DropBoxConfig.staticPath ??
-                    (DropBoxConfig.staticPath = System.Reflection.Assembly.GetExecutingAssembly().Location);
-            }
-        }
-
-        private static Configuration ExeConfig
-        {
-            get
-            {
-                return DropBoxConfig.staticExeConfig ??
-                    (DropBoxConfig.staticExeConfig = ConfigurationManager.OpenExeConfiguration(DropBoxConfig.Path));
-            }
         }
     }
 }

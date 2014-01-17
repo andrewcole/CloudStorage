@@ -4,14 +4,14 @@ using Illallangi.CloudStoragePS.Config;
 namespace Illallangi.CloudStoragePS.DropBox
 {
     [Cmdlet(VerbsCommon.Get, "DropBoxConfig")]
-    public sealed class GetDropBoxConfig : PSCmdlet
+    public sealed class GetDropBoxConfig : NinjectCmdlet<DropBoxModule>
     {
         protected override void BeginProcessing()
         {
             this.WriteObject(new
                 {
-                    DropBoxConfig.Config.ApiKey,
-                    DropBoxConfig.Config.AppSecret,
+                    this.Get<IDropBoxConfig>().ApiKey,
+                    this.Get<IDropBoxConfig>().AppSecret,
                 });
         }
     }

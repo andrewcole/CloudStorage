@@ -8,7 +8,7 @@ using Illallangi.CloudStoragePS.Config;
 namespace Illallangi.CloudStoragePS.DropBox
 {
     [Cmdlet(VerbsCommon.Open, "DropBoxAuthorizeUrl")]
-    public sealed class OpenDropBoxAuthorizeUrl : PSCmdlet
+    public sealed class OpenDropBoxAuthorizeUrl : NinjectCmdlet<DropBoxModule>
     {
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public string UserToken { get; set; }
@@ -21,8 +21,8 @@ namespace Illallangi.CloudStoragePS.DropBox
             try
             {
                 var client = new DropNetClient(
-                    DropBoxConfig.Config.ApiKey,
-                    DropBoxConfig.Config.AppSecret,
+                    this.Get<IDropBoxConfig>().ApiKey,
+                    this.Get<IDropBoxConfig>().AppSecret,
                     this.UserToken,
                     this.UserSecret);
 
@@ -42,7 +42,7 @@ namespace Illallangi.CloudStoragePS.DropBox
                     failure,
                     failure.Response.Content,
                     ErrorCategory.InvalidResult,
-                    DropBoxConfig.Config));
+                    this.Get<IDropBoxConfig>()));
             }
             catch (Exception failure)
             {
@@ -50,7 +50,7 @@ namespace Illallangi.CloudStoragePS.DropBox
                     failure,
                     failure.Message,
                     ErrorCategory.InvalidResult,
-                    DropBoxConfig.Config));
+                    this.Get<IDropBoxConfig>()));
             }
         }
     }

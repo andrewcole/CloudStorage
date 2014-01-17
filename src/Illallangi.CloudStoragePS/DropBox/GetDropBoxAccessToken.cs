@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using DropNet;
@@ -8,7 +9,7 @@ using Illallangi.CloudStoragePS.Config;
 namespace Illallangi.CloudStoragePS.DropBox
 {
     [Cmdlet(VerbsCommon.Get, "DropBoxAccessToken", DefaultParameterSetName = GetDropBoxAccessToken.Cache)]
-    public sealed class GetDropBoxAccessToken : PSCmdlet
+    public sealed class GetDropBoxAccessToken : NinjectCmdlet<DropBoxModule>
     {
         private const string Cache = "Cache";
 
@@ -28,14 +29,14 @@ namespace Illallangi.CloudStoragePS.DropBox
 
         protected override void ProcessRecord()
         {
-            switch (this.ParameterSetName)
+            try
             {
-                case GetDropBoxAccessToken.Api:
-                    try
-                    {
+                switch (this.ParameterSetName)
+                {
+                    case GetDropBoxAccessToken.Api:
                         var client = new DropNetClient(
-                            DropBoxConfig.Config.ApiKey,
-                            DropBoxConfig.Config.AppSecret,
+                            this.Get<IDropBoxConfig>().ApiKey,
+                            this.Get<IDropBoxConfig>().AppSecret,
                             this.UserToken,
                             this.UserSecret);
 
@@ -48,33 +49,32 @@ namespace Illallangi.CloudStoragePS.DropBox
                             AccessSecret = accessToken.Secret,
                             EMail = accountInfo.email,
                         });
-                    }
-                    catch (DropboxException failure)
-                    {
-                        this.WriteError(new ErrorRecord(
-                            failure,
-                            failure.Response.Content,
-                            ErrorCategory.InvalidResult,
-                            DropBoxConfig.Config));
-                    }
-                    catch (Exception failure)
-                    {
-                        this.WriteError(new ErrorRecord(
-                            failure,
-                            failure.Message,
-                            ErrorCategory.InvalidResult,
-                            DropBoxConfig.Config));
-                    }
 
-                    break;
-                case GetDropBoxAccessToken.Cache:
-                    this.WriteObject(
-                            DropBoxTokenCache
-                                .FromFile()
-                                .Where(token => string.IsNullOrWhiteSpace(this.Account) || token.EMail.Equals(this.Account)));
-                    break;
-                default:
-                    throw new NotImplementedException();
+                        break;
+                    case GetDropBoxAccessToken.Cache:
+                        this.WriteObject(
+                                this.Get<ICollection<DropBoxToken>>()
+                                    .Where(token => string.IsNullOrWhiteSpace(this.Account) || token.EMail.Equals(this.Account)));
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+            catch (DropboxException failure)
+            {
+                this.WriteError(new ErrorRecord(
+                    failure,
+                    failure.Response.Content,
+                    ErrorCategory.InvalidResult,
+                    this.Get<IDropBoxConfig>()));
+            }
+            catch (Exception failure)
+            {
+                this.WriteError(new ErrorRecord(
+                    failure,
+                    failure.Message,
+                    ErrorCategory.InvalidResult,
+                    this.Get<IDropBoxConfig>()));
             }
         }
     }

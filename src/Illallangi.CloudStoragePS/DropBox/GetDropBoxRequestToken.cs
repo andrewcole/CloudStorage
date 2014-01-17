@@ -7,15 +7,15 @@ using Illallangi.CloudStoragePS.Config;
 namespace Illallangi.CloudStoragePS.DropBox
 {
     [Cmdlet(VerbsCommon.Get, "DropBoxRequestToken")]
-    public sealed class GetDropBoxRequestToken : PSCmdlet
+    public sealed class GetDropBoxRequestToken : NinjectCmdlet<DropBoxModule>
     {
         protected override void ProcessRecord()
         {
             try
             {
                 var client = new DropNetClient(
-                    DropBoxConfig.Config.ApiKey,
-                    DropBoxConfig.Config.AppSecret);
+                    this.Get<IDropBoxConfig>().ApiKey,
+                    this.Get<IDropBoxConfig>().AppSecret);
 
                 var userLogin = client.GetToken();
 
@@ -31,7 +31,7 @@ namespace Illallangi.CloudStoragePS.DropBox
                     failure,
                     failure.Response.Content,
                     ErrorCategory.InvalidResult,
-                    DropBoxConfig.Config));
+                    this.Get<IDropBoxConfig>()));
             }
             catch (Exception failure)
             {
@@ -39,7 +39,7 @@ namespace Illallangi.CloudStoragePS.DropBox
                     failure,
                     failure.Message,
                     ErrorCategory.InvalidResult,
-                    DropBoxConfig.Config));
+                    this.Get<IDropBoxConfig>()));
             }
         }
     }
