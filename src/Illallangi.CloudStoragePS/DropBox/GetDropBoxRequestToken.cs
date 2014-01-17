@@ -4,7 +4,7 @@ using DropNet;
 using DropNet.Exceptions;
 using Illallangi.CloudStoragePS.Config;
 
-namespace Illallangi.CloudStoragePS.PowerShell
+namespace Illallangi.CloudStoragePS.DropBox
 {
     [Cmdlet(VerbsCommon.Get, "DropBoxRequestToken")]
     public sealed class GetDropBoxRequestToken : PSCmdlet

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Management.Automation;
-
 using FlickrNet;
-
 using Illallangi.CloudStoragePS.Config;
 
 namespace Illallangi.CloudStoragePS.Flickr
@@ -13,13 +11,10 @@ namespace Illallangi.CloudStoragePS.Flickr
     {
         private const string Cache = "Cache";
 
-        private const string API = "API";
+        private const string Api = "Api";
 
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = GetFlickrAccessToken.API)]
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = GetFlickrAccessToken.Api)]
         public string Frob { get; set; }
-
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = GetFlickrAccessToken.API)]
-        public string AuthorizeUrl { get; set; }
 
         [Parameter(ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ParameterSetName = GetFlickrAccessToken.Cache)]
         public string UserName { get; set; }
@@ -28,7 +23,7 @@ namespace Illallangi.CloudStoragePS.Flickr
         {
             switch (this.ParameterSetName)
             {
-                case GetFlickrAccessToken.API:
+                case GetFlickrAccessToken.Api:
                     try
                     {
                         var client = new FlickrNet.Flickr(
@@ -40,7 +35,7 @@ namespace Illallangi.CloudStoragePS.Flickr
                         this.WriteObject(new
                         {
                             AccessToken = authToken.Token,
-                            UserName = authToken.User.UserName,
+                            authToken.User.UserName,
                         });
                     }
                     catch (FlickrException failure)
@@ -59,6 +54,7 @@ namespace Illallangi.CloudStoragePS.Flickr
                             ErrorCategory.InvalidResult,
                             FlickrConfig.Config));
                     }
+
                     break;
                 case GetFlickrAccessToken.Cache:
                     this.WriteObject(

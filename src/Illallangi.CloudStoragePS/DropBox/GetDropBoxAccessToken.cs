@@ -1,37 +1,36 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Management.Automation;
 using DropNet;
 using DropNet.Exceptions;
 using Illallangi.CloudStoragePS.Config;
 
-namespace Illallangi.CloudStoragePS.PowerShell
+namespace Illallangi.CloudStoragePS.DropBox
 {
-    [Cmdlet(VerbsCommon.Get, "DropBoxAccessToken", DefaultParameterSetName = GetDropBoxAccessToken.CACHE)]
+    [Cmdlet(VerbsCommon.Get, "DropBoxAccessToken", DefaultParameterSetName = GetDropBoxAccessToken.Cache)]
     public sealed class GetDropBoxAccessToken : PSCmdlet
     {
-        private const string CACHE = "Cache";
+        private const string Cache = "Cache";
 
-        private const string API = "Api";
+        private const string Api = "Api";
 
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = GetDropBoxAccessToken.API)]
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = GetDropBoxAccessToken.Api)]
         public string UserToken { get; set; }
 
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = GetDropBoxAccessToken.API)]
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = GetDropBoxAccessToken.Api)]
         public string UserSecret { get; set; }
 
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = GetDropBoxAccessToken.API)]
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = GetDropBoxAccessToken.Api)]
         public string AuthorizeUrl { get; set; }
 
-        [Parameter(ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ParameterSetName = GetDropBoxAccessToken.CACHE)]
+        [Parameter(ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ParameterSetName = GetDropBoxAccessToken.Cache)]
         public string Account { get; set; }
 
         protected override void ProcessRecord()
         {
             switch (this.ParameterSetName)
             {
-                case GetDropBoxAccessToken.API:
+                case GetDropBoxAccessToken.Api:
                     try
                     {
                         var client = new DropNetClient(
@@ -66,8 +65,9 @@ namespace Illallangi.CloudStoragePS.PowerShell
                             ErrorCategory.InvalidResult,
                             DropBoxConfig.Config));
                     }
+
                     break;
-                case GetDropBoxAccessToken.CACHE:
+                case GetDropBoxAccessToken.Cache:
                     this.WriteObject(
                             DropBoxTokenCache
                                 .FromFile()

@@ -1,14 +1,11 @@
-﻿namespace Illallangi.CloudStoragePS.Flickr
+﻿using System.Collections.Generic;
+using System.Management.Automation;
+using FlickrNet;
+
+namespace Illallangi.CloudStoragePS.Flickr
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Management.Automation;
-    using System.Net;
-
-    using FlickrNet;
-
     [Cmdlet(VerbsCommon.Get, "Photo")]
-    public sealed class GetFlickrPhoto : FlickrPSCmdlet
+    public sealed class GetFlickrPhoto : FlickrPsCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
         public string PhotosetId { get; set; }

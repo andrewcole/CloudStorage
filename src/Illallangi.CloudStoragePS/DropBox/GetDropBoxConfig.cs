@@ -1,6 +1,4 @@
 ﻿using System.Management.Automation;
-using DropNet;
-using DropNet.Models;
 using Illallangi.CloudStoragePS.Config;
 
 namespace Illallangi.CloudStoragePS.DropBox
@@ -12,8 +10,8 @@ namespace Illallangi.CloudStoragePS.DropBox
         {
             this.WriteObject(new
                 {
-                    ApiKey = DropBoxConfig.Config.ApiKey,
-                    AppSecret = DropBoxConfig.Config.AppSecret,
+                    DropBoxConfig.Config.ApiKey,
+                    DropBoxConfig.Config.AppSecret,
                 });
         }
     }

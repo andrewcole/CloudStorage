@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Management.Automation;
 using DropNet;
-using DropNet.Exceptions;
-using Illallangi.CloudStoragePS.Config;
 
-namespace Illallangi.CloudStoragePS.PowerShell
+namespace Illallangi.CloudStoragePS.DropBox
 {
     [Cmdlet(VerbsCommon.Push, "FileToDropBox")]
-    public sealed class PushFileToDropBox : DropBoxPSCmdlet
+    public sealed class PushFileToDropBox : DropBoxPsCmdlet
     {
         private string currentSource;
 
@@ -28,6 +24,7 @@ namespace Illallangi.CloudStoragePS.PowerShell
             {
                 return this.currentSource;
             }
+
             set
             {
                 this.currentSource = string.IsNullOrWhiteSpace(value) ?
@@ -47,7 +44,7 @@ namespace Illallangi.CloudStoragePS.PowerShell
 
             yield return new
             {
-                Path = result.Path,
+                result.Path,
             };
         }
     }

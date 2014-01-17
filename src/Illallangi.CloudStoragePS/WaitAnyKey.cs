@@ -17,6 +17,7 @@ namespace Illallangi.CloudStoragePS
                 return this.currentPrompt ??
                     (this.currentPrompt = DropBoxConfig.Config.WaitPrompt);
             }
+
             set
             {
                 this.currentPrompt = value;

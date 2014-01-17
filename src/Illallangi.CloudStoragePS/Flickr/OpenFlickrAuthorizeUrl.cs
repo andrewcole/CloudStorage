@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Management.Automation;
 using FlickrNet;
-using FlickrNet.Exceptions;
 using Illallangi.CloudStoragePS.Config;
 
 namespace Illallangi.CloudStoragePS.Flickr
@@ -26,7 +25,7 @@ namespace Illallangi.CloudStoragePS.Flickr
 
                 this.WriteObject(new
                     {
-                        Frob = this.Frob,
+                        this.Frob,
                         AuthorizeUrl = authorizeUrl,
                     });
             }

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Management.Automation;
-using DropNet;
-using DropNet.Exceptions;
+﻿using System.Management.Automation;
 using Illallangi.CloudStoragePS.Config;
 
-namespace Illallangi.CloudStoragePS.PowerShell
+namespace Illallangi.CloudStoragePS.DropBox
 {
     [Cmdlet(VerbsCommon.Set, "DropBoxAccessToken")]
     public sealed class SetDropBoxAccessToken : PSCmdlet

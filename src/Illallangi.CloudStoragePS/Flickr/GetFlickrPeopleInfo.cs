@@ -5,17 +5,17 @@ using System.Management.Automation;
 namespace Illallangi.CloudStoragePS.Flickr
 {
     [Cmdlet(VerbsCommon.Get, "FlickrPeopleInfo", DefaultParameterSetName = GetFlickrPeopleInfo.FindByUserName)]
-    public sealed class GetFlickrPeopleInfo : FlickrPSCmdlet
+    public sealed class GetFlickrPeopleInfo : FlickrPsCmdlet
     {
         #region Fields
 
-        public const string FindByUserName = "FindByUserName";
+        private const string FindByUserName = "FindByUserName";
 
-        public const string FindByEmail = "FindByEmail";
+        private const string FindByEmail = "FindByEmail";
 
-        public const string FindByUrl = "FindByUrl";
+        private const string FindByUrl = "FindByUrl";
 
-        public const string FindById = "FindById";
+        private const string FindById = "FindById";
 
         private string currentUserId;
 

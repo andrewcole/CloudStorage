@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Management.Automation;
 using DropNet;
 using DropNet.Exceptions;
 using Illallangi.CloudStoragePS.Config;
 
-namespace Illallangi.CloudStoragePS.PowerShell
+namespace Illallangi.CloudStoragePS.DropBox
 {
-    [Cmdlet("Get", "DropBoxAbstractClass", DefaultParameterSetName="EMail")]
-    public abstract class DropBoxPSCmdlet : PSCmdlet
+    [Cmdlet("Get", "DropBoxAbstractClass", DefaultParameterSetName = "EMail")]
+    public abstract class DropBoxPsCmdlet : PSCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName="EMail")]
+        [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = "EMail")]
         public string EMail { get; set; }
 
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = "Value")]
@@ -41,6 +40,7 @@ namespace Illallangi.CloudStoragePS.PowerShell
                     return;
                 }
             }
+
             try
             {
                 var client = new DropNetClient(
@@ -58,7 +58,6 @@ namespace Illallangi.CloudStoragePS.PowerShell
                     failure.Response.Content,
                     ErrorCategory.InvalidResult,
                     DropBoxConfig.Config));
-                return;
             }
             catch (Exception failure)
             {
@@ -67,10 +66,9 @@ namespace Illallangi.CloudStoragePS.PowerShell
                     failure.Message,
                     ErrorCategory.InvalidResult,
                     DropBoxConfig.Config));
-                return;
             }
         }
 
-        protected abstract IEnumerable<Object> Process(DropNetClient client);
+        protected abstract IEnumerable<object> Process(DropNetClient client);
     }
 }

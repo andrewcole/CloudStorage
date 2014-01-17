@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Management.Automation;
 using FlickrNet;
-using FlickrNet.Exceptions;
 using Illallangi.CloudStoragePS.Config;
 
 namespace Illallangi.CloudStoragePS.Flickr

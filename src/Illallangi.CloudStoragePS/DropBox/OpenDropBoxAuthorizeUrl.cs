@@ -5,7 +5,7 @@ using DropNet;
 using DropNet.Exceptions;
 using Illallangi.CloudStoragePS.Config;
 
-namespace Illallangi.CloudStoragePS.PowerShell
+namespace Illallangi.CloudStoragePS.DropBox
 {
     [Cmdlet(VerbsCommon.Open, "DropBoxAuthorizeUrl")]
     public sealed class OpenDropBoxAuthorizeUrl : PSCmdlet
@@ -31,8 +31,8 @@ namespace Illallangi.CloudStoragePS.PowerShell
 
                 this.WriteObject(new
                     {
-                        UserToken = this.UserToken,
-                        UserSecret = this.UserSecret,
+                        this.UserToken,
+                        this.UserSecret,
                         AuthorizeUrl = authorizeUrl,
                     });
             }

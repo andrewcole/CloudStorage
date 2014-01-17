@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Management.Automation;
-
 using FlickrNet;
 
 namespace Illallangi.CloudStoragePS.Flickr
 {
     [Cmdlet(VerbsCommon.Get, "FlickrPhotoset")]
-    public sealed class GetFlickrPhotoset : FlickrPSCmdlet
+    public sealed class GetFlickrPhotoset : FlickrPsCmdlet
     {
         #region Fields
 

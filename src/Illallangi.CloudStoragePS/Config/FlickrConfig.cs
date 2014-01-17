@@ -8,24 +8,6 @@ namespace Illallangi.CloudStoragePS.Config
         private static Configuration staticExeConfig;
         private static FlickrConfig staticConfig;
 
-        public static string Path
-        {
-            get
-            {
-                return FlickrConfig.staticPath ??
-                    (FlickrConfig.staticPath = System.Reflection.Assembly.GetExecutingAssembly().Location);
-            }
-        }
-
-        public static Configuration ExeConfig
-        {
-            get
-            {
-                return FlickrConfig.staticExeConfig ??
-                    (FlickrConfig.staticExeConfig = ConfigurationManager.OpenExeConfiguration(FlickrConfig.Path));
-            }
-        }
-
         public static FlickrConfig Config
         {
             get
@@ -49,7 +31,7 @@ namespace Illallangi.CloudStoragePS.Config
             set { this["SharedSecret"] = value; }
         }
 
-        [ConfigurationProperty("TokenCache", DefaultValue="%localappdata%\\Illallangi Enterprises\\CloudStoragePS\\FlickrTokens.json")]
+        [ConfigurationProperty("TokenCache", DefaultValue = "%localappdata%\\Illallangi Enterprises\\CloudStoragePS\\FlickrTokens.json")]
         public string TokenCache
         {
             get { return (string)this["TokenCache"]; }
@@ -61,6 +43,24 @@ namespace Illallangi.CloudStoragePS.Config
         {
             get { return (string)this["WaitPrompt"]; }
             set { this["WaitPrompt"] = value; }
+        }
+
+        private static Configuration ExeConfig
+        {
+            get
+            {
+                return FlickrConfig.staticExeConfig ??
+                    (FlickrConfig.staticExeConfig = ConfigurationManager.OpenExeConfiguration(FlickrConfig.Path));
+            }
+        }
+
+        private static string Path
+        {
+            get
+            {
+                return FlickrConfig.staticPath ??
+                    (FlickrConfig.staticPath = System.Reflection.Assembly.GetExecutingAssembly().Location);
+            }
         }
     }
 }

@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Management.Automation;
 using DropNet;
-using DropNet.Exceptions;
-using Illallangi.CloudStoragePS.Config;
 
-namespace Illallangi.CloudStoragePS.PowerShell
+namespace Illallangi.CloudStoragePS.DropBox
 {
     [Cmdlet(VerbsCommon.Get, "DropBoxAccountInfo")]
-    public sealed class GetDropBoxAccountInfo : DropBoxPSCmdlet
+    public sealed class GetDropBoxAccountInfo : DropBoxPsCmdlet
     {
         protected override IEnumerable<object> Process(DropNetClient client)
         {

@@ -8,24 +8,6 @@ namespace Illallangi.CloudStoragePS.Config
         private static Configuration staticExeConfig;
         private static DropBoxConfig staticConfig;
 
-        public static string Path
-        {
-            get
-            {
-                return DropBoxConfig.staticPath ??
-                    (DropBoxConfig.staticPath = System.Reflection.Assembly.GetExecutingAssembly().Location);
-            }
-        }
-
-        public static Configuration ExeConfig
-        {
-            get
-            {
-                return DropBoxConfig.staticExeConfig ??
-                    (DropBoxConfig.staticExeConfig = ConfigurationManager.OpenExeConfiguration(DropBoxConfig.Path));
-            }
-        }
-
         public static DropBoxConfig Config
         {
             get
@@ -49,7 +31,7 @@ namespace Illallangi.CloudStoragePS.Config
             set { this["AppSecret"] = value; }
         }
 
-        [ConfigurationProperty("TokenCache", DefaultValue="%localappdata%\\Illallangi Enterprises\\CloudStoragePS\\DropBoxTokens.json")]
+        [ConfigurationProperty("TokenCache", DefaultValue = "%localappdata%\\Illallangi Enterprises\\CloudStoragePS\\DropBoxTokens.json")]
         public string TokenCache
         {
             get { return (string)this["TokenCache"]; }
@@ -61,6 +43,24 @@ namespace Illallangi.CloudStoragePS.Config
         {
             get { return (string)this["WaitPrompt"]; }
             set { this["WaitPrompt"] = value; }
+        }
+        
+        private static string Path
+        {
+            get
+            {
+                return DropBoxConfig.staticPath ??
+                    (DropBoxConfig.staticPath = System.Reflection.Assembly.GetExecutingAssembly().Location);
+            }
+        }
+
+        private static Configuration ExeConfig
+        {
+            get
+            {
+                return DropBoxConfig.staticExeConfig ??
+                    (DropBoxConfig.staticExeConfig = ConfigurationManager.OpenExeConfiguration(DropBoxConfig.Path));
+            }
         }
     }
 }
