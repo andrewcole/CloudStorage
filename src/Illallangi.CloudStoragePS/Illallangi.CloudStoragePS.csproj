@@ -93,7 +93,6 @@
     <Compile Include="DropBox\GetDropBoxAccessToken.cs" />
     <Compile Include="DropBox\OpenDropBoxAuthorizeUrl.cs" />
     <Compile Include="DropBox\GetDropBoxRequestToken.cs" />
-    <Compile Include="DropBox\GetDropBoxConfig.cs" />
     <Compile Include="Config\DropBoxConfig.cs" />
     <Compile Include="Flickr\GetFlickrFrob.cs" />
     <Compile Include="Flickr\OpenFlickrAuthorizeUrl.cs" />
