@@ -14,9 +14,13 @@ namespace Illallangi.CloudStoragePS.Flickr
         private const string Api = "Api";
 
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = GetFlickrAccessToken.Api)]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public string Frob { get; set; }
 
         [Parameter(ValueFromPipeline = true, ValueFromPipelineByPropertyName = true, ParameterSetName = GetFlickrAccessToken.Cache)]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public string UserName { get; set; }
 
         protected override void ProcessRecord()

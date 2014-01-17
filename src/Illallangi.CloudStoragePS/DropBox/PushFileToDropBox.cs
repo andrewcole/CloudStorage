@@ -11,13 +11,19 @@ namespace Illallangi.CloudStoragePS.DropBox
         private string currentSource;
 
         [Parameter]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public string Destination { get; set; }
 
         [Parameter]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public string FileName { get; set; }
 
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
         [Alias("FullName")]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public string Source
         { 
             get

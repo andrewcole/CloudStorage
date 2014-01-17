@@ -9,12 +9,18 @@ namespace Illallangi.CloudStoragePS.DropBox
     public sealed class SetDropBoxAccessToken : NinjectCmdlet<DropBoxModule>
     {
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public string AccessToken { get; set; }
 
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public string AccessSecret { get; set; }
 
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public string EMail { get; set; }
 
         protected override void ProcessRecord()

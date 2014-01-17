@@ -11,9 +11,13 @@ namespace Illallangi.CloudStoragePS.DropBox
     public sealed class OpenDropBoxAuthorizeUrl : NinjectCmdlet<DropBoxModule>
     {
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public string UserToken { get; set; }
 
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public string UserSecret { get; set; }
 
         protected override void ProcessRecord()

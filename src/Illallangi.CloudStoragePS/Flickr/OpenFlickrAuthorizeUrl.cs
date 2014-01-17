@@ -10,6 +10,8 @@ namespace Illallangi.CloudStoragePS.Flickr
     public sealed class OpenFlickrAuthorizeUrl : PSCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public string Frob { get; set; }
 
         protected override void ProcessRecord()

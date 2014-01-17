@@ -8,6 +8,8 @@ namespace Illallangi.CloudStoragePS.Flickr
     public sealed class GetFlickrPhoto : FlickrPsCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public string PhotosetId { get; set; }
 
         protected override IEnumerable<object> Process()

@@ -24,15 +24,23 @@ namespace Illallangi.CloudStoragePS.Flickr
         #region Properties
 
         [Parameter(Mandatory = false, ParameterSetName = GetFlickrPeopleInfo.FindByUserName, Position = 1)]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public string UserName { get; set; }
 
         [Parameter(Mandatory = true, ParameterSetName = GetFlickrPeopleInfo.FindByEmail)]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public string Email { get; set; }
 
         [Parameter(Mandatory = true, ParameterSetName = GetFlickrPeopleInfo.FindByUrl)]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public string Url { get; set; }
 
         [Parameter(Mandatory = true, ParameterSetName = GetFlickrPeopleInfo.FindById)]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public string UserId
         {
             get

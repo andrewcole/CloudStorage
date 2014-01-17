@@ -19,9 +19,13 @@ namespace Illallangi.CloudStoragePS.Flickr
         #region Properties
 
         [Parameter(Mandatory = true)]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public string Path { get; set; }
 
         [Parameter(Mandatory = false)]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public PhotoType Type
         {
             get
@@ -36,6 +40,8 @@ namespace Illallangi.CloudStoragePS.Flickr
         }
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = BackupFlickrPhoto.PhotoObject)]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public FlickrNet.Photo Photo { get; set; }
 
         private string Url

@@ -20,9 +20,13 @@ namespace Illallangi.CloudStoragePS.Flickr
         #region Properties
 
         [Parameter(Mandatory = false)]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public string AccessToken { get; set; }
 
         [Parameter(Mandatory = false)]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public string AuthUser { get; set; }
 
         protected FlickrNet.Flickr Client

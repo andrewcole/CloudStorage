@@ -19,9 +19,13 @@ namespace Illallangi.CloudStoragePS.Flickr
         #region Properties
 
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = GetFlickrPhotoset.PhotosetsGetList)]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public string UserId { get; set; }
 
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true, ParameterSetName = GetFlickrPhotoset.PhotosGetAllContexts)]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        // ReSharper disable once MemberCanBePrivate.Global
         public string PhotoId { get; set; }
 
         #endregion
