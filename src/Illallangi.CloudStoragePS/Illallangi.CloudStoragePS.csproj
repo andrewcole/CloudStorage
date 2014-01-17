@@ -72,10 +72,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\FlickrToken.cs" />
-    <Compile Include="Config\FlickrTokenCache.cs" />
     <Compile Include="Config\FlickrConfig.cs" />
     <Compile Include="Config\DropBoxToken.cs" />
     <Compile Include="DropBox\DropBoxModule.cs" />
+    <Compile Include="Flickr\FlickrModule.cs" />
     <Compile Include="NinjectCmdlet.cs" />
     <Compile Include="Flickr\BackupFlickrPhoto.cs" />
     <Compile Include="Flickr\FlickrPSCmdlet.cs" />

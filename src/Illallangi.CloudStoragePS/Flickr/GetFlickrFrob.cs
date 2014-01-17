@@ -6,15 +6,15 @@ using Illallangi.CloudStoragePS.Config;
 namespace Illallangi.CloudStoragePS.Flickr
 {
     [Cmdlet(VerbsCommon.Get, "FlickrFrob")]
-    public sealed class GetFlickrFrob : PSCmdlet
+    public sealed class GetFlickrFrob : NinjectCmdlet<FlickrModule>
     {
         protected override void ProcessRecord()
         {
             try
             {
                 var client = new FlickrNet.Flickr(
-                    FlickrConfig.Config.ApiKey,
-                    FlickrConfig.Config.SharedSecret);
+                    this.Get<IFlickrConfig>().ApiKey,
+                    this.Get<IFlickrConfig>().SharedSecret);
 
                 var frob = client.AuthGetFrob();
 
@@ -29,7 +29,7 @@ namespace Illallangi.CloudStoragePS.Flickr
                     failure,
                     failure.Message,
                     ErrorCategory.InvalidResult,
-                    FlickrConfig.Config));
+                    this.Get<IFlickrConfig>()));
             }
             catch (Exception failure)
             {
@@ -37,7 +37,7 @@ namespace Illallangi.CloudStoragePS.Flickr
                     failure,
                     failure.Message,
                     ErrorCategory.InvalidResult,
-                    FlickrConfig.Config));
+                    this.Get<IFlickrConfig>()));
             }
         }
     }

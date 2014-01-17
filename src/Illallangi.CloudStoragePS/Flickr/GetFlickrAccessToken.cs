@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using FlickrNet;
@@ -7,7 +8,7 @@ using Illallangi.CloudStoragePS.Config;
 namespace Illallangi.CloudStoragePS.Flickr
 {
     [Cmdlet(VerbsCommon.Get, "FlickrAccessToken", DefaultParameterSetName = GetFlickrAccessToken.Cache)]
-    public sealed class GetFlickrAccessToken : PSCmdlet
+    public sealed class GetFlickrAccessToken : NinjectCmdlet<FlickrModule>
     {
         private const string Cache = "Cache";
 
@@ -31,8 +32,8 @@ namespace Illallangi.CloudStoragePS.Flickr
                     try
                     {
                         var client = new FlickrNet.Flickr(
-                            FlickrConfig.Config.ApiKey,
-                            FlickrConfig.Config.SharedSecret);
+                            this.Get<IFlickrConfig>().ApiKey,
+                            this.Get<IFlickrConfig>().SharedSecret);
 
                         var authToken = client.AuthGetToken(this.Frob);
                         
@@ -48,7 +49,7 @@ namespace Illallangi.CloudStoragePS.Flickr
                             failure,
                             failure.Message,
                             ErrorCategory.InvalidResult,
-                            FlickrConfig.Config));
+                            this.Get<IFlickrConfig>()));
                     }
                     catch (Exception failure)
                     {
@@ -56,14 +57,13 @@ namespace Illallangi.CloudStoragePS.Flickr
                             failure,
                             failure.Message,
                             ErrorCategory.InvalidResult,
-                            FlickrConfig.Config));
+                            this.Get<IFlickrConfig>()));
                     }
 
                     break;
                 case GetFlickrAccessToken.Cache:
                     this.WriteObject(
-                            FlickrTokenCache
-                                .FromFile()
+                            this.Get<ICollection<FlickrToken>>()
                                 .Where(token => string.IsNullOrWhiteSpace(this.UserName) || token.UserName.Equals(this.UserName)));
                     break;
                 default:

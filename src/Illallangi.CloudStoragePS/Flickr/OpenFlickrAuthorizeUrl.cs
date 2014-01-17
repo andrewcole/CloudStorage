@@ -7,7 +7,7 @@ using Illallangi.CloudStoragePS.Config;
 namespace Illallangi.CloudStoragePS.Flickr
 {
     [Cmdlet(VerbsCommon.Open, "FlickrAuthorizeUrl")]
-    public sealed class OpenFlickrAuthorizeUrl : PSCmdlet
+    public sealed class OpenFlickrAuthorizeUrl : NinjectCmdlet<FlickrModule>
     {
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
@@ -19,8 +19,8 @@ namespace Illallangi.CloudStoragePS.Flickr
             try
             {
                 var client = new FlickrNet.Flickr(
-                    FlickrConfig.Config.ApiKey,
-                    FlickrConfig.Config.SharedSecret);
+                    this.Get<IFlickrConfig>().ApiKey,
+                    this.Get<IFlickrConfig>().SharedSecret);
 
                 var authorizeUrl = client.AuthCalcUrl(this.Frob, FlickrNet.AuthLevel.Write);
                 Process.Start(authorizeUrl);
@@ -37,7 +37,7 @@ namespace Illallangi.CloudStoragePS.Flickr
                     failure,
                     failure.Message,
                     ErrorCategory.InvalidResult,
-                    FlickrConfig.Config));
+                    this.Get<IFlickrConfig>()));
             }
             catch (Exception failure)
             {
@@ -45,7 +45,7 @@ namespace Illallangi.CloudStoragePS.Flickr
                     failure,
                     failure.Message,
                     ErrorCategory.InvalidResult,
-                    FlickrConfig.Config));
+                    this.Get<IFlickrConfig>()));
             }
         }
     }

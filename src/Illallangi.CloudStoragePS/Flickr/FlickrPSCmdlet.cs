@@ -7,13 +7,17 @@ using Illallangi.CloudStoragePS.Config;
 namespace Illallangi.CloudStoragePS.Flickr
 {
     [Cmdlet("Get", "FlickrAbstractClass")]
-    public abstract class FlickrPsCmdlet : PSCmdlet
+    public abstract class FlickrPsCmdlet : NinjectCmdlet<FlickrModule>
     {
         #region Fields
 
         private string currentToken;
 
+        private IFlickrConfig currentConfig;
+
         private FlickrNet.Flickr currentClient;
+
+        private IEnumerable<FlickrToken> currentTokens;
 
         #endregion
 
@@ -28,6 +32,22 @@ namespace Illallangi.CloudStoragePS.Flickr
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         // ReSharper disable once MemberCanBePrivate.Global
         public string AuthUser { get; set; }
+
+        protected IFlickrConfig Config
+        {
+            get
+            {
+                return this.currentConfig ?? (this.currentConfig = this.GetConfig());
+            }
+        }
+
+        protected IEnumerable<FlickrToken> Tokens
+        {
+            get
+            {
+                return this.currentTokens ?? (this.currentTokens = this.GetTokens());
+            }
+        }
 
         protected FlickrNet.Flickr Client
         {
@@ -57,7 +77,7 @@ namespace Illallangi.CloudStoragePS.Flickr
             }
             catch (FlickrException failure)
             {
-                this.WriteError(new ErrorRecord(failure, failure.Message, ErrorCategory.InvalidResult, FlickrConfig.Config));
+                this.WriteError(new ErrorRecord(failure, failure.Message, ErrorCategory.InvalidResult, this.Config));
             }
         }
 
@@ -67,7 +87,7 @@ namespace Illallangi.CloudStoragePS.Flickr
         {
             if (!string.IsNullOrWhiteSpace(this.AuthUser))
             {
-                return FlickrTokenCache.FromFile().Single(t => t.UserName.Equals(this.AuthUser)).AccessToken;
+                return this.Tokens.Single(t => t.UserName.Equals(this.AuthUser)).AccessToken;
             }
 
             if (!string.IsNullOrWhiteSpace(this.AccessToken))
@@ -75,14 +95,24 @@ namespace Illallangi.CloudStoragePS.Flickr
                 return this.AccessToken;
             }
 
-            return FlickrTokenCache.FromFile().First().AccessToken;
+            return this.Tokens.First().AccessToken;
+        }
+
+        private IEnumerable<FlickrToken> GetTokens()
+        {
+            return this.Get<ICollection<FlickrToken>>();
+        }
+
+        private IFlickrConfig GetConfig()
+        {
+            return this.Get<IFlickrConfig>();
         }
 
         private FlickrNet.Flickr GetClient()
         {
             return new FlickrNet.Flickr(
-                    FlickrConfig.Config.ApiKey,
-                    FlickrConfig.Config.SharedSecret,
+                    this.Config.ApiKey,
+                    this.Config.SharedSecret,
                     this.Token);
         }
 

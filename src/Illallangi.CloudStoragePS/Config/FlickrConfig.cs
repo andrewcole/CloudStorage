@@ -2,21 +2,19 @@
 
 namespace Illallangi.CloudStoragePS.Config
 {
-    public sealed class FlickrConfig : ConfigurationSection
+    public interface IFlickrConfig
     {
-        private static string staticPath;
-        private static Configuration staticExeConfig;
-        private static FlickrConfig staticConfig;
+        string ApiKey { get; }
 
-        public static FlickrConfig Config
-        {
-            get
-            {
-                return FlickrConfig.staticConfig ??
-                    (FlickrConfig.staticConfig = (FlickrConfig)FlickrConfig.ExeConfig.GetSection("FlickrConfig"));
-            }
-        }
+        string SharedSecret { get; }
 
+        string TokenCache { get; }
+
+        string WaitPrompt { get; }
+    }
+
+    public sealed class FlickrConfig : ConfigurationSection, IFlickrConfig
+    {
         [ConfigurationProperty("ApiKey", IsRequired = true)]
         public string ApiKey
         {
@@ -43,24 +41,6 @@ namespace Illallangi.CloudStoragePS.Config
         {
             get { return (string)this["WaitPrompt"]; }
             set { this["WaitPrompt"] = value; }
-        }
-
-        private static Configuration ExeConfig
-        {
-            get
-            {
-                return FlickrConfig.staticExeConfig ??
-                    (FlickrConfig.staticExeConfig = ConfigurationManager.OpenExeConfiguration(FlickrConfig.Path));
-            }
-        }
-
-        private static string Path
-        {
-            get
-            {
-                return FlickrConfig.staticPath ??
-                    (FlickrConfig.staticPath = System.Reflection.Assembly.GetExecutingAssembly().Location);
-            }
         }
     }
 }
