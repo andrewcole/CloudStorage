@@ -6,7 +6,7 @@ using FlickrNet;
 
 using Illallangi.CloudStoragePS.Config;
 
-namespace Illallangi.CloudStoragePS.PowerShell
+namespace Illallangi.CloudStoragePS.Flickr
 {
     [Cmdlet(VerbsCommon.Get, "FlickrAccessToken", DefaultParameterSetName = GetFlickrAccessToken.Cache)]
     public sealed class GetFlickrAccessToken : PSCmdlet
