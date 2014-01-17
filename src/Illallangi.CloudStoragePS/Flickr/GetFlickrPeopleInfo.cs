@@ -13,6 +13,8 @@ namespace Illallangi.CloudStoragePS.Flickr
 
         public const string FindByEmail = "FindByEmail";
 
+        public const string FindByUrl = "FindByUrl";
+
         public const string FindById = "FindById";
 
         private string currentUserId;
@@ -27,6 +29,9 @@ namespace Illallangi.CloudStoragePS.Flickr
         [Parameter(Mandatory = true, ParameterSetName = GetFlickrPeopleInfo.FindByEmail)]
         public string Email { get; set; }
 
+        [Parameter(Mandatory = true, ParameterSetName = GetFlickrPeopleInfo.FindByUrl)]
+        public string Url { get; set; }
+
         [Parameter(Mandatory = true, ParameterSetName = GetFlickrPeopleInfo.FindById)]
         public string UserId
         {
@@ -40,6 +45,8 @@ namespace Illallangi.CloudStoragePS.Flickr
                             this.Client.PeopleFindByUserName(this.UserName).UserId;
                     case GetFlickrPeopleInfo.FindByEmail:
                         return this.Client.PeopleFindByEmail(this.Email).UserId;
+                    case GetFlickrPeopleInfo.FindByUrl:
+                        return this.Client.UrlsLookupUser(this.Url).UserId;
                     case GetFlickrPeopleInfo.FindById:
                         return this.currentUserId;
                     default:
