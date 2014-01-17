@@ -3,7 +3,7 @@ using Ninject;
 using Ninject.Extensions.Logging.Log4net;
 using Ninject.Modules;
 
-namespace Illallangi.CloudStoragePS.DropBox
+namespace Illallangi.CloudStoragePS
 {
     [Cmdlet(VerbsCommon.Get, NinjectCmdlet<TModule>.Noun)]
     public abstract class NinjectCmdlet<TModule> : PSCmdlet where TModule : INinjectModule, new()

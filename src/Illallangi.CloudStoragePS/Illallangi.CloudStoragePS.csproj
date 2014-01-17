@@ -76,7 +76,7 @@
     <Compile Include="Config\FlickrConfig.cs" />
     <Compile Include="Config\DropBoxToken.cs" />
     <Compile Include="DropBox\DropBoxModule.cs" />
-    <Compile Include="DropBox\NinjectCmdlet.cs" />
+    <Compile Include="NinjectCmdlet.cs" />
     <Compile Include="Flickr\BackupFlickrPhoto.cs" />
     <Compile Include="Flickr\FlickrPSCmdlet.cs" />
     <Compile Include="DropBox\DropBoxPSCmdlet.cs" />
