@@ -4,7 +4,7 @@ using FlickrNet;
 
 namespace Illallangi.CloudStoragePS.Flickr
 {
-    [Cmdlet(VerbsCommon.Get, "Photo")]
+    [Cmdlet(VerbsCommon.Get, "FlickrPhoto")]
     public sealed class GetFlickrPhoto : FlickrPsCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipelineByPropertyName = true)]

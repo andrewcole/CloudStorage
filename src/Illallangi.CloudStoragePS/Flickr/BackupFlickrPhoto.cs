@@ -5,7 +5,7 @@ using System.Net;
 
 namespace Illallangi.CloudStoragePS.Flickr
 {
-    [Cmdlet(VerbsData.Backup, "Photo")]
+    [Cmdlet(VerbsData.Backup, "FlickrPhoto")]
     public sealed class BackupFlickrPhoto : FlickrPsCmdlet
     {
         #region Fields
