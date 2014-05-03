@@ -78,6 +78,21 @@
       <Component Id="DropNetDllC" Directory="SOFTWAREDIR" Guid="{6D26505F-24F1-42BC-8334-27CBBD53891A}" Permanent="yes" >
         <File Id="DropNetDllF" KeyPath="yes" Source="$(var.source)\DropNet.dll" />
       </Component>
+      <Component Id="FlickrNetdllC" Directory="SOFTWAREDIR" Guid="{220FB4B0-89D5-4850-8DD1-1AB66480D3AE}" Permanent="yes" >
+        <File Id="FlickrNetdllF" KeyPath="yes" Source="$(var.source)\FlickrNet.dll" />
+      </Component>
+      <Component Id="log4netdllC" Directory="SOFTWAREDIR" Guid="{B085BDAB-F736-4789-873D-DB1230FC1D8F}" Permanent="yes" >
+        <File Id="log4netdllF" KeyPath="yes" Source="$(var.source)\log4net.dll" />
+      </Component>
+      <Component Id="NinjectdllC" Directory="SOFTWAREDIR" Guid="{3171D76E-8331-4F1D-BA14-C94C82AE3E63}" Permanent="yes" >
+        <File Id="NinjectdllF" KeyPath="yes" Source="$(var.source)\Ninject.dll" />
+      </Component>
+      <Component Id="NinjectExtensionsLoggingdllC" Directory="SOFTWAREDIR" Guid="{DC3778CB-35DD-41E2-82CF-61BD98F93B5F}" Permanent="yes" >
+        <File Id="NinjectExtensionsLoggingdllF" KeyPath="yes" Source="$(var.source)\Ninject.Extensions.Logging.dll" />
+      </Component>
+      <Component Id="NinjectExtensionsLoggingLog4NetdllC" Directory="SOFTWAREDIR" Guid="{EF84F843-78EE-4B39-A335-80F67FF3A370}" Permanent="yes" >
+        <File Id="NinjectExtensionsLoggingLog4NetdllF" KeyPath="yes" Source="$(var.source)\Ninject.Extensions.Logging.Log4Net.dll" />
+      </Component>
       <ComponentRef Id="Empty" />
     </Feature>
 

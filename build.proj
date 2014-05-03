@@ -81,6 +81,21 @@
 
     <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\Newtonsoft.Json.dll"
           DestinationFolder="$(BuildDir32)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\FlickrNet.dll"
+          DestinationFolder="$(BuildDir32)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\log4net.dll"
+          DestinationFolder="$(BuildDir32)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\Ninject.dll"
+          DestinationFolder="$(BuildDir32)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\Ninject.Extensions.Logging.dll"
+          DestinationFolder="$(BuildDir32)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\Ninject.Extensions.Logging.Log4Net.dll"
+          DestinationFolder="$(BuildDir32)\bin" />
   </Target>
   
   <Target Name="Copy64" DependsOnTargets="Compile">
@@ -107,6 +122,21 @@
           DestinationFolder="$(BuildDir64)\bin" />
 
     <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\Newtonsoft.Json.dll"
+          DestinationFolder="$(BuildDir64)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\FlickrNet.dll"
+          DestinationFolder="$(BuildDir64)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\log4net.dll"
+          DestinationFolder="$(BuildDir64)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\Ninject.dll"
+          DestinationFolder="$(BuildDir64)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\Ninject.Extensions.Logging.dll"
+          DestinationFolder="$(BuildDir64)\bin" />
+
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\Ninject.Extensions.Logging.Log4Net.dll"
           DestinationFolder="$(BuildDir64)\bin" />
   </Target>
 
