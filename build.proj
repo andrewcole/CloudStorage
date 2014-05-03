@@ -36,7 +36,7 @@
     </GitVersion>
 
     <AssemblyInfo CodeLanguage="CS"
-                  OutputFile="$(SourceDir)\Illallangi.CloudStoragePS\Properties\AssemblyInfo.cs"
+                  OutputFile="$(SourceDir)\Illallangi.CloudStorage\Properties\AssemblyInfo.cs"
                   AssemblyTitle="Cloud Storage PowerShell Module"
                   AssemblyDescription=""
                   AssemblyCompany="Illallangi Enterprises"
@@ -53,7 +53,7 @@
   <Target Name="Compile" DependsOnTargets="Version">
     <Message Text="=========== Compile ===========" Importance="High" />
 
-    <MSBuild Projects="$(SourceDir)\Illallangi.CloudStoragePS.sln" Properties="Configuration=$(Configuration)" Targets="Rebuild" />
+    <MSBuild Projects="$(SourceDir)\Illallangi.CloudStorage.sln" Properties="Configuration=$(Configuration)" Targets="Rebuild" />
   </Target>
 
   <Target Name="Copy32" DependsOnTargets="Compile">
@@ -61,25 +61,25 @@
 
     <MakeDir Directories="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\Illallangi.CloudStoragePS.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\Illallangi.CloudStorage.dll"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\Illallangi.CloudStoragePS.dll.config"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\Illallangi.CloudStorage.dll.config"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\Illallangi.CloudStoragePS.psd1"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\Illallangi.CloudStorage.psd1"
           DestinationFolder="$(BuildDir32)\bin" />
     
-    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\Illallangi.CloudStoragePS.psm1"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\Illallangi.CloudStorage.psm1"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\DropNet.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\DropNet.dll"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\RestSharp.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\RestSharp.dll"
           DestinationFolder="$(BuildDir32)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\Newtonsoft.Json.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\Newtonsoft.Json.dll"
           DestinationFolder="$(BuildDir32)\bin" />
   </Target>
   
@@ -88,25 +88,25 @@
 
     <MakeDir Directories="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\Illallangi.CloudStoragePS.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\Illallangi.CloudStorage.dll"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\Illallangi.CloudStoragePS.dll.config"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\Illallangi.CloudStorage.dll.config"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\Illallangi.CloudStoragePS.psd1"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\Illallangi.CloudStorage.psd1"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\Illallangi.CloudStoragePS.psm1"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\Illallangi.CloudStorage.psm1"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\DropNet.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\DropNet.dll"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\RestSharp.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\RestSharp.dll"
           DestinationFolder="$(BuildDir64)\bin" />
 
-    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStoragePS\bin\$(Configuration)\Newtonsoft.Json.dll"
+    <Copy SourceFiles="$(SourceDir)\Illallangi.CloudStorage\bin\$(Configuration)\Newtonsoft.Json.dll"
           DestinationFolder="$(BuildDir64)\bin" />
   </Target>
 

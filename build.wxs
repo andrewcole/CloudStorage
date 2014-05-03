@@ -48,7 +48,7 @@
         <Directory Id="WindowsPowerShell" Name="WindowsPowerShell">
           <Directory Id="v1.0" Name="v1.0">
             <Directory Id="Modules" Name="Modules">
-              <Directory Id="SOFTWAREDIR" Name="Illallangi.CloudStoragePS" />
+              <Directory Id="SOFTWAREDIR" Name="Illallangi.CloudStorage" />
             </Directory>
           </Directory>
         </Directory>
@@ -63,11 +63,11 @@
     <Property Id="ARPNOMODIFY" Value="1" />
 
     <Feature Id="Complete" Level="1" Title="$(var.AppName)">
-      <Component Id="IllallangiCloudStoragePSDllC" Directory="SOFTWAREDIR" Guid="{115B1C9B-63CF-4583-8E6D-0D5F456E341B}" Permanent="yes" >
-        <File Id="IllallangiCloudStoragePSDllC" KeyPath="yes" Source="$(var.source)\Illallangi.CloudStoragePS.dll" />
-        <File Id="IllallangiCloudStoragePSDllCConfig" Source="$(var.source)\Illallangi.CloudStoragePS.dll.Config" />
-        <File Id="IllallangiCloudStoragePSDllCPSD1" Source="$(var.source)\Illallangi.CloudStoragePS.psd1" />
-        <File Id="IllallangiCloudStoragePSDllCPSM1" Source="$(var.source)\Illallangi.CloudStoragePS.psm1" />
+      <Component Id="IllallangiCloudStorageDllC" Directory="SOFTWAREDIR" Guid="{115B1C9B-63CF-4583-8E6D-0D5F456E341B}" Permanent="yes" >
+        <File Id="IllallangiCloudStorageDllC" KeyPath="yes" Source="$(var.source)\Illallangi.CloudStorage.dll" />
+        <File Id="IllallangiCloudStorageDllCConfig" Source="$(var.source)\Illallangi.CloudStorage.dll.Config" />
+        <File Id="IllallangiCloudStorageDllCPSD1" Source="$(var.source)\Illallangi.CloudStorage.psd1" />
+        <File Id="IllallangiCloudStorageDllCPSM1" Source="$(var.source)\Illallangi.CloudStorage.psm1" />
       </Component>
       <Component Id="NewtonsoftJsonDllC" Directory="SOFTWAREDIR" Guid="{83A22C6C-41CE-4687-ACBD-D851C9CE380C}" Permanent="yes" >
         <File Id="NewtonsoftJsonDllF" KeyPath="yes" Source="$(var.source)\Newtonsoft.Json.dll" />
